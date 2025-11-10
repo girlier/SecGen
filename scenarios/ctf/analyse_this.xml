@@ -59,21 +59,17 @@
       </input>
     </utility>
 
-    <utility module_path=".*/kali_top10"/>
-    <utility module_path=".*/kali_web"/>
-    <utility module_path=".*/cyberchef"/>
-
     <utility module_path=".*/iceweasel">
       <input into="accounts">
         <value>{"username":"kali","password":"kali","super_user":"true","strings_to_leak":[],"leaked_filenames":[]}</value>
       </input>
       <input into="autostart">
-        <value>true</value>
-      </input>
-      <input into="start_page">
-        <value>file:///opt/cyberchef/CyberChef.html</value>
+        <value>false</value>
       </input>
     </utility>
+
+    <utility module_path=".*/kali_top10"/>
+    <utility module_path=".*/kali_web"/>
 
     <network type="private_network">
       <input into="IP_address">
@@ -145,6 +141,16 @@
 
     <!-- Release pcap file -->
     <vulnerability type="pcap">
+      <input into="account">
+        <generator type="account">
+          <input into="username">
+            <datastore>username</datastore>
+          </input>
+          <input into="password">
+            <datastore>password</datastore>
+          </input>
+        </generator>
+      </input>
       <input into="base64_file">
         <generator type="pcap_generator">
           <input into="strings_to_leak">
@@ -158,17 +164,27 @@
       <input into="leaked_filename">
         <value>capture.pcap</value>
       </input>
-      <input into="storage_directory">
-        <value>/home/analyse/</value>
-      </input>
     </vulnerability>
 
     <vulnerability module_path=".*hidden_file.*">
-      <input into="storage_directory">
-        <value>/home/analyse/</value>
+      <input into="account">
+        <generator type="account">
+          <input into="username">
+            <datastore>username</datastore>
+          </input>
+          <input into="password">
+            <datastore>password</datastore>
+          </input>
+        </generator>
       </input>
       <input into="strings_to_leak">
         <generator type="flag_generator"/>
+      </input>
+      <input into="leaked_filenames">
+        <value>secret</value>
+      </input>
+      <input into="challenge_name">
+        <value>find_it</value>
       </input>
     </vulnerability>
 
