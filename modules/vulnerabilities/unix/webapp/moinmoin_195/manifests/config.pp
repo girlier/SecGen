@@ -2,7 +2,6 @@ class moinmoin_195::config {
   $secgen_parameters = secgen_functions::get_parameters($::base64_inputs_file)
   $images_to_leak = $secgen_parameters['images_to_leak']
   $raw_org = $secgen_parameters['organisation']
-
   $strings_to_leak = $secgen_parameters['strings_to_leak']
   $leaked_filenames = $secgen_parameters['leaked_filenames']
 
@@ -28,7 +27,6 @@ class moinmoin_195::config {
     content  => template('moinmoin_195/wikiconfig.py.erb'),
   }
 
-  # TODO: use apache puppet module, as we've done for other webapps
   # Web server config
   file { '/etc/apache2/apache2.conf':
     ensure => file,
