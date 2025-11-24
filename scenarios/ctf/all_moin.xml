@@ -108,7 +108,7 @@
 
   <system>
     <system_name>web_server</system_name>
-    <base distro="Debian 10" type="desktop" name="KDE"/>
+    <base distro="Debian 12" type="desktop" name="KDE"/>
 
     <input into_datastore="organisation">
       <encoder type="line_selector">
@@ -119,7 +119,7 @@
     </input>
 
 
-    <vulnerability module_path=".*/moinmoin_195">
+    <vulnerability module_path=".*/moinmoin_195" privilege="user_rwx" access="remote">
       <input into="organisation">
         <datastore>organisation</datastore>
       </input>
@@ -143,15 +143,17 @@
       </input>
     </vulnerability>
 
-    <vulnerability module_path=".*/sudo_root_apt_get">
+    <vulnerability module_path=".*/sudo_root_apt_get" privilege="root_rwx" access="local">
       <input into="strings_to_leak">
         <generator type="flag_generator"/>
       </input>
       <input into="strings_to_pre_leak">
         <generator type="flag_generator"/>
       </input>
+      <input into="leaked_filenames">
+        <generator type="filename_generator"/>
+      </input>
     </vulnerability>
-
 
     <network type="private_network">
       <input into="IP_address">
