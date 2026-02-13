@@ -57,18 +57,18 @@ class maltrail_rce::install {
     source => "puppet:///modules/${modulename}/${tarball}",
   }
 
-  # Extract MalTrail tarball
+  # Extract MalTrail tarball (GitHub format: stamparm-maltrail-<sha>)
   exec { 'extract-maltrail':
     cwd     => '/tmp',
     command => "tar -xzf ${tarball}",
-    creates => '/tmp/maltrail-0.54',
+    creates => '/opt/maltrail',
     require => File["/tmp/${tarball}"],
   }
 
-  # Move MalTrail to installation directory
+  # Move MalTrail to installation directory (handle GitHub tarball naming)
   exec { 'install-maltrail':
     cwd     => '/tmp',
-    command => 'mv maltrail-0.54 /opt/maltrail',
+    command => 'mv stamparm-maltrail-* /opt/maltrail',
     creates => '/opt/maltrail',
     require => Exec['extract-maltrail'],
   }
