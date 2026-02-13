@@ -4,8 +4,8 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.github/cliffe/SecGen/scenario">
 
-  <name>MalTrail RCE to Root</name>
-  <author>SecGen Contributor</author>
+  <name>Off the trail</name>
+  <author>Rosie Fletcher</author>
   <description>A multi-stage penetration testing exercise where students exploit a critical command injection vulnerability in MalTrail (CVE-2025-34073) to gain initial access, then escalate privileges using a misconfigured SUID binary. This lab teaches the full attack lifecycle from reconnaissance to root compromise.
   </description>
 

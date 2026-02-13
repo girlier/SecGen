@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.github/cliffe/SecGen/vulnerability">
 
     <name>MalTrail <= 0.54 Unauthenticated RCE (CVE-2025-34073)</name>
-    <author>Your Name</author>
+    <author>Rosie Fletcher</author>
     <module_license>MIT</module_license>
     <description>MalTrail versions <= 0.54 contain an unauthenticated command injection vulnerability
         in the login endpoint. A remote attacker can execute arbitrary operating system commands
@@ -53,10 +53,9 @@
     <software_name>MalTrail</software_name>
     <software_license>MIT</software_license>
 
-    <!-- Requires system update first -->
-    <requires>
-        <type>update</type>
-    </requires>
+    <!-- Note: For offline Debian 12 environments, ensure base image has:
+         python3, python3-pip, python3-dev, libpcap-dev, build-essential, python3-pcapy
+         The MalTrail tarball and config are bundled locally in files/ -->
 
     <!-- Cybersecurity Body of Knowledge mapping -->
     <CyBOK KA="WAM" topic="Server-Side Vulnerabilities and Mitigations">

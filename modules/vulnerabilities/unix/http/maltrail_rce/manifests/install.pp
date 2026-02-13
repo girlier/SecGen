@@ -1,5 +1,18 @@
 # Class: maltrail_rce::install
 # Install process for vulnerable MalTrail version 0.54
+#
+# OFFLINE SUPPORT:
+# - MalTrail tarball is bundled locally in files/maltrail-0.54.tar.gz
+# - Configuration is bundled locally in files/maltrail.conf
+# - System packages (python3, libpcap-dev, etc.) should be pre-installed on base image
+# - python3-pcapy is available in Debian 12 (bookworm) repositories
+#
+# For truly offline environments, ensure the base Debian 12 image has:
+#   - python3, python3-pip, python3-dev
+#   - libpcap-dev, build-essential
+#   - python3-pcapy
+# Or use a local apt mirror/pre-cached packages
+#
 class maltrail_rce::install {
   Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
   $modulename = 'maltrail_rce'
@@ -24,7 +37,9 @@ class maltrail_rce::install {
     ensure => present,
   }
 
-  # Install required packages (including python3-pcapy from Debian repos for offline support)
+  # Install required packages for MalTrail
+  # Note: For offline environments, these should be pre-installed or cached on the base image
+  # python3-pcapy is the key dependency for MalTrail's packet capture functionality
   ensure_packages(['python3', 'python3-pip', 'python3-dev', 'libpcap-dev', 'build-essential', 'python3-pcapy'])
 
   # Create user home directory with proper permissions
