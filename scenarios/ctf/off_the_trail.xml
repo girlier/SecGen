@@ -88,36 +88,14 @@
   <!-- Target VM with MalTrail RCE vulnerability and SUID privilege escalation -->
   <system>
     <system_name>maltrail_server</system_name>
-    <base platform="linux" type="server"/>
-
-    <!-- Login message hint -->
-    <utility module_path=".*/after_login_message">
-      <input into="strings_to_leak">
-        <encoder type="string_format_encoder">
-          <input into="strings_to_encode">
-            <value>Hackme</value>
-          </input>
-        </encoder>
-        <value>Well done! You exploited MalTrail. Now find a way to escalate to root.</value>
-      </input>
-    </utility>
+    <base distro="Debian 12" type="desktop" name="KDE"/>
 
     <!-- MalTrail RCE vulnerability - provides initial access as maltrail user -->
     <vulnerability module_path=".*/maltrail_rce" access="remote" privilege="user_rwx">
       <input into="strings_to_leak">
         <generator type="flag_generator" />
-        <generator type="ctf_challenge" />
       </input>
     </vulnerability>
-
-    <!-- SUID less binary for privilege escalation to root -->
-    <vulnerability module_path=".*/suid_root_less" access="local" privilege="root_rwx">
-      <input into="strings_to_leak">
-        <generator type="flag_generator" />
-      </input>
-    </vulnerability>
-
-    <service/>
 
     <network type="private_network">
       <input into="IP_address">

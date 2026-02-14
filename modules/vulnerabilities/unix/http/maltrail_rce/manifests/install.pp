@@ -1,8 +1,8 @@
 # Class: maltrail_rce::install
-# Install process for vulnerable MalTrail version 0.54
+# Install process for vulnerable MalTrail version 0.53
 #
 # OFFLINE SUPPORT:
-# - MalTrail tarball is bundled locally in files/maltrail-0.54.tar.gz
+# - MalTrail tarball is bundled locally in files/maltrail-0.53.tar.gz
 # - Configuration is bundled locally in files/maltrail.conf
 # - System packages (python3, libpcap-dev, etc.) should be pre-installed on base image
 # - python3-pcapy is available in Debian 12 (bookworm) repositories
@@ -23,7 +23,7 @@ class maltrail_rce::install {
   $user_home = "/home/${user}"
 
   # MalTrail tarball name (single file, no splitting needed)
-  $tarball = 'maltrail-0.54.tar.gz'
+  $tarball = 'maltrail-0.53.tar.gz'
 
   # Create dedicated user for MalTrail service
   user { $user:
@@ -57,7 +57,7 @@ class maltrail_rce::install {
     source => "puppet:///modules/${modulename}/${tarball}",
   }
 
-  # Extract MalTrail tarball (GitHub format: stamparm-maltrail-<sha>)
+  # Extract MalTrail tarball (maltrail-0.53 directory format)
   exec { 'extract-maltrail':
     cwd     => '/tmp',
     command => "tar -xzf ${tarball}",
@@ -65,10 +65,10 @@ class maltrail_rce::install {
     require => File["/tmp/${tarball}"],
   }
 
-  # Move MalTrail to installation directory (handle GitHub tarball naming)
+  # Move MalTrail to installation directory
   exec { 'install-maltrail':
     cwd     => '/tmp',
-    command => 'mv stamparm-maltrail-* /opt/maltrail',
+    command => 'mv maltrail-0.53 /opt/maltrail',
     creates => '/opt/maltrail',
     require => Exec['extract-maltrail'],
   }
