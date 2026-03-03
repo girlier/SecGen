@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<vulnerability xmlns="http://www.github/cliffe/SecGen/vulnerability"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.github/cliffe/SecGen/vulnerability">
+  <name>Wing FTP Server Unauthenticated RCE (CVE-2025-47812)</name>
+  <author>Rosie Fletcher</author>
+  <module_license>MIT</module_license>
+  <description>
+    Wing FTP Server versions 7.4.3 and earlier are vulnerable to an
+    unauthenticated remote code execution vulnerability via NULL byte
+    injection in the username parameter. Attackers can inject arbitrary
+    Lua code into session files, leading to RCE with root privileges.
+  </description>
+
+  <type>ftp</type>
+  <privilege>root_rwx</privilege>
+  <access>remote</access>
+  <platform>linux</platform>
+  <difficulty>low</difficulty>
+
+  <read_fact>port</read_fact>
+  <read_fact>strings_to_leak</read_fact>
+  <read_fact>leaked_filenames</read_fact>
+  <read_fact>unix_username</read_fact>
+
+  <default_input into="port">
+    <generator type="random_unregistered_port"/>
+  </default_input>
+
+  <default_input into="strings_to_leak">
+    <generator type="message_generator"/>
+  </default_input>
+
+  <default_input into="leaked_filenames">
+    <generator type="filename_generator"/>
+  </default_input>
+
+  <default_input into="unix_username">
+    <value>ftpuser</value>
+  </default_input>
+
+  <cve>CVE-2025-47812</cve>
+  <cvss_base_score>10</cvss_base_score>
+  <cvss_vector>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H</cvss_vector>
+  <reference>https://www.rapid7.com/db/modules/exploit/multi/http/wingftp_null_byte_rce</reference>
+  <reference>https://www.exploit-db.com/exploits/52347</reference>
+  <software_name>Wing FTP Server</software_name>
+  <software_license>Proprietary</software_license>
+
+  <conflict>
+    <type>^ftp$</type>
+  </conflict>
+
+  <requires>
+    <type>update</type>
+  </requires>
+
+  <CyBOK KA="WAM" topic="Server-Side Vulnerabilities and Mitigations">
+    <keyword>server-side misconfiguration and vulnerable components</keyword>
+    <keyword>Injection vulnerabilities</keyword>
+  </CyBOK>
+  <CyBOK KA="MAT" topic="Attacks and exploitation">
+    <keyword>EXPLOITATION</keyword>
+    <keyword>EXPLOITATION FRAMEWORKS</keyword>
+    <keyword>REMOTE CODE EXECUTION</keyword>
+  </CyBOK>
+  <CyBOK KA="SS" topic="Categories of Vulnerabilities">
+    <keyword>CVEs and CWEs</keyword>
+  </CyBOK>
+  <CyBOK KA="SOIM" topic="PENETRATION TESTING">
+    <keyword>PENETRATION TESTING - SOFTWARE TOOLS</keyword>
+    <keyword>PENETRATION TESTING - ACTIVE PENETRATION</keyword>
+  </CyBOK>
+  <CyBOK KA="NS" topic="PENETRATION TESTING">
+    <keyword>FILE - TRANSFER PROTOCOL (FTP)</keyword>
+  </CyBOK>
+</vulnerability>
