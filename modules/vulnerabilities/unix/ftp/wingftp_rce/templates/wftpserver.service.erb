@@ -1,0 +1,14 @@
+[Unit]
+Description=Wing FTP Server
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/wftpserver/wftpserver start
+ExecStop=/opt/wftpserver/wftpserver stop
+PIDFile=/var/run/wftpserver.pid
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target
