@@ -159,6 +159,9 @@
       <input into="unix_username">
         <datastore access_json="['manager']['username']">organisation</datastore>
       </input>
+      <input into="admin_password">
+        <datastore>spoiler_admin_pass</datastore>
+      </input>
     </vulnerability>
 
     <!-- Privilege escalation via sudo -->

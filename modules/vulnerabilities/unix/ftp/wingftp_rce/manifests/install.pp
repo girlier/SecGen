@@ -1,6 +1,7 @@
 class wingftp_rce::install {
   $secgen_parameters = secgen_functions::get_parameters($::base64_inputs_file)
   $user = $secgen_parameters['unix_username'][0]
+  $admin_password = $secgen_parameters['admin_password'][0]
   $tarball = 'wftpserver-linux-64bit-7.4.3.tar.gz'
   
   # Generate a random domain name
@@ -42,10 +43,10 @@ class wingftp_rce::install {
   }
 
   # Setup.sh asks for: admin name, admin password (8+ chars), listener port
-  # Note: password123 + "WingFTP" suffix = password123WingFTP (8+ chars required)
+  # Note: Wing FTP requires 8+ char password, so we append "WingFTP" suffix
   exec { 'setup-wingftp':
     cwd       => '/opt/wftpserver',
-    command   => '/usr/bin/expect -c "spawn ./setup.sh; expect \"administrator name\"; send \"admin\r\"; expect \"administrator password\"; send \"password123\r\"; expect \"listener port\"; send \"5466\r\"; expect eof"',
+    command   => "/usr/bin/expect -c \"spawn ./setup.sh; expect \\\"administrator name\\\"; send \\\"admin\\r\\\"; expect \\\"administrator password\\\"; send \\\"${admin_password}\\r\\\"; expect \\\"listener port\\\"; send \\\"5466\\r\\\"; expect eof\"",
     creates   => '/opt/wftpserver/Data/_ADMINISTRATOR',
     require   => [Exec['extract-wingftp'], Package['expect']],
     logoutput => true,
@@ -72,7 +73,7 @@ Requires=wftpserver.service
 [Service]
 Type=oneshot
 ExecStartPre=/bin/sleep 5
-ExecStart=/opt/wftpserver/create_domain.sh ${domain_name} /home/${user} admin password123WingFTP
+ExecStart=/opt/wftpserver/create_domain.sh ${domain_name} /home/${user} admin ${admin_password}
 RemainAfterExit=yes
 TimeoutStartSec=60
 
