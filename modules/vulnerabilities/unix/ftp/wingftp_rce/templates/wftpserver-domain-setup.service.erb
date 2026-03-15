@@ -1,0 +1,14 @@
+[Unit]
+Description=Wing FTP Domain Setup
+After=network.target wftpserver.service
+Requires=wftpserver.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 5
+ExecStart=/opt/wftpserver/create_domain.sh <%= @domain_name %> /home/<%= @user %> admin <%= @admin_password %>
+RemainAfterExit=yes
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target

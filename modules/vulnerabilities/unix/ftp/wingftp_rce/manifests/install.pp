@@ -63,23 +63,9 @@ class wingftp_rce::install {
   }
 
   # Create a systemd service to set up the domain after Wing FTP starts
-  file { '/etc/systemd/system/wingftp-domain-setup.service':
+  file { '/etc/systemd/system/wftpserver-domain-setup.service':
     ensure  => file,
-    content => "[Unit]
-Description=Wing FTP Domain Setup
-After=network.target wftpserver.service
-Requires=wftpserver.service
-
-[Service]
-Type=oneshot
-ExecStartPre=/bin/sleep 5
-ExecStart=/opt/wftpserver/create_domain.sh ${domain_name} /home/${user} admin ${admin_password}
-RemainAfterExit=yes
-TimeoutStartSec=60
-
-[Install]
-WantedBy=multi-user.target
-",
+    content => template('wingftp_rce/wftpserver-domain-setup.service.erb'),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -87,9 +73,9 @@ WantedBy=multi-user.target
   }
 
   # Enable the domain setup service
-  exec { 'enable-wingftp-domain-setup':
-    command => 'systemctl daemon-reload && systemctl enable wingftp-domain-setup.service',
-    require => File['/etc/systemd/system/wingftp-domain-setup.service'],
+  exec { 'enable-wftpserver-domain-setup':
+    command => 'systemctl daemon-reload && systemctl enable wftpserver-domain-setup.service',
+    require => File['/etc/systemd/system/wftpserver-domain-setup.service'],
   }
 
   exec { 'cleanup-wingftp-tarball':

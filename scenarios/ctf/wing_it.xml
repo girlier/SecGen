@@ -150,11 +150,13 @@
 
     <!-- Wing FTP Server RCE vulnerability -->
     <vulnerability module_path=".*/wingftp_rce">
-      <input into="strings_to_leak">
+      <!-- Flag 1: Accessible via anonymous FTP (in user's home directory) -->
+      <input into="strings_to_pre_leak">
         <generator type="flag_generator"/>
       </input>
-      <input into="leaked_filenames">
-        <value>flag</value>
+      <!-- Flag 2: Requires RCE to access (in /opt/wftpserver/) -->
+      <input into="strings_to_leak">
+        <generator type="flag_generator"/>
       </input>
       <input into="unix_username">
         <datastore access_json="['manager']['username']">organisation</datastore>

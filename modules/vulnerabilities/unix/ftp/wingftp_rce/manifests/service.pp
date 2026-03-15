@@ -9,7 +9,7 @@ class wingftp_rce::service {
   }
 
   # Start the domain setup service after Wing FTP is running
-  service { 'wingftp-domain-setup':
+  service { 'wftpserver-domain-setup':
     ensure  => running,
     enable  => true,
     require => [
