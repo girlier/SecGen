@@ -24,7 +24,7 @@
   <read_fact>unix_username</read_fact>
 
   <default_input into="port">
-    <generator type="random_unregistered_port"/>
+    <generator module_path=".*/random_unregistered_port"/>
   </default_input>
 
   <default_input into="strings_to_leak">
@@ -41,7 +41,7 @@
 
   <cve>CVE-2025-47812</cve>
   <cvss_base_score>10</cvss_base_score>
-  <cvss_vector>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H</cvss_vector>
+  <cvss_vector>AV:N/AC:L/Au:N/C:C/I:C/A:C</cvss_vector>
   <reference>https://www.rapid7.com/db/modules/exploit/multi/http/wingftp_null_byte_rce</reference>
   <reference>https://www.exploit-db.com/exploits/52347</reference>
   <software_name>Wing FTP Server</software_name>

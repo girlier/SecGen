@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/opt/wftpserver/wftpserver start
-ExecStop=/opt/wftpserver/wftpserver stop
-PIDFile=/var/run/wftpserver.pid
+WorkingDirectory=/opt/wftpserver
+ExecStart=/opt/wftpserver/wftpserver
+ExecStop=/bin/pkill -x wftpserver
 Restart=on-failure
 User=root
 
